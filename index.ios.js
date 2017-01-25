@@ -26,15 +26,15 @@ const PERCENTAGES = [
     60,
     55,
     50,
-    45,
-    40,
-    35,
-    30,
-    25,
-    20,
-    15,
-    10,
-    5
+    // 45,
+    // 40,
+    // 35,
+    // 30,
+    // 25,
+    // 20,
+    // 15,
+    // 10,
+    // 5
 ];
 
 const initialState = {
@@ -100,10 +100,12 @@ export default class LiftCalculator extends Component {
                 <View style={styles.container}>
 
                     {
-                        _.map(this.state.activePercentages, (x) => {
+                        _.map(this.state.activePercentages, (x, i) => {
                             return (
-                                <Text style={styles.text}>
-                                    {x.percentageOfMax}: {x.value}
+                                <Text
+                                    key={i}
+                                    style={styles.text}>
+                                    {x.percentageOfMax}: {_.round(x.value)}
                                 </Text>
                             )
                         })
