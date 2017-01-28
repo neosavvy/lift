@@ -6,6 +6,14 @@
 
 import _ from 'lodash';
 import React, {Component} from 'react';
+import { Provider } from 'react-redux'
+import {
+    createStore,
+    applyMiddleware,
+    combineReducers,
+    compose } from 'redux';
+import thunkMiddleware from 'react-thunk';
+import createLogger from 'redux-logger';
 
 import EnterMaxLiftView from './shared/views/enter_max_lift.view';
 import ShowPercentagesForLiftView from './shared/views/show_percentages_for_lift.view';
@@ -19,6 +27,8 @@ import {
     View
 } from 'react-native';
 
+import reducer from './shared/reducers/create_reducer';
+
 const INITIAL = {
     isComputed: false,
     maxBench: null,
@@ -29,6 +39,22 @@ const INITIAL = {
     deadLiftPercentages: [],
     activePercentages: []
 };
+
+const loggerMiddleware = createLogger(
+    { predicate: (getState, action) => __DEV__ }
+);
+
+function configureStore(initialState) {
+    const enhancer = compose(
+        applyMiddleware(
+            //thunkMiddleware,
+            loggerMiddleware
+        )
+    );
+    return createStore(reducer, initialState, enhancer);
+}
+
+const store = configureStore(INITIAL);
 
 export default class LiftCalculator extends Component {
 
@@ -65,4 +91,10 @@ export default class LiftCalculator extends Component {
     }
 }
 
-AppRegistry.registerComponent('LiftCalculator', () => LiftCalculator);
+const App = () => (
+    <Provider store={store}>
+        <LiftCalculator/>
+    </Provider>
+);
+
+AppRegistry.registerComponent('LiftCalculator', () => App);
