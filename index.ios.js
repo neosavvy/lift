@@ -6,6 +6,10 @@
 
 import _ from 'lodash';
 import React, {Component} from 'react';
+
+import EnterMaxLiftView from './shared/views/enter_max_lift.view';
+import ShowPercentagesForLiftView from './shared/views/show_percentages_for_lift.view';
+
 import {
     AppRegistry,
     TextInput,
@@ -15,29 +19,7 @@ import {
     View
 } from 'react-native';
 
-const PERCENTAGES = [
-    95,
-    90,
-    85,
-    80,
-    75,
-    70,
-    65,
-    60,
-    55,
-    50,
-    // 45,
-    // 40,
-    // 35,
-    // 30,
-    // 25,
-    // 20,
-    // 15,
-    // 10,
-    // 5
-];
-
-const initialState = {
+const INITIAL = {
     isComputed: false,
     maxBench: null,
     maxSquat: null,
@@ -52,141 +34,35 @@ export default class LiftCalculator extends Component {
 
     constructor(props) {
         super(props);
-        this.state = initialState;
+        this.state = INITIAL
     }
 
-    onShow = (activePercentages) => {
-        this.setState({
-            activePercentages
-        })
+    onUpdate = (updated) => {
+        this.setState(updated);
     };
 
     onReset = () => {
-        this.setState(initialState)
-    };
-
-    computePercentagesOf(maxValue) {
-        return _.reduce(PERCENTAGES, (acc, percentage) => {
-            const computation = {
-                percentageOfMax: percentage,
-                value: (percentage / 100) * maxValue
-            };
-            return acc.concat(computation);
-        }, [])
-    }
-
-    onCalculate = () => {
-        const {
-            maxBench,
-            maxSquat,
-            maxDeadLift
-        } = this.state;
-
-        const benchPercentages = this.computePercentagesOf(maxBench);
-        const squatPercentages = this.computePercentagesOf(maxSquat);
-        const deadLiftPercentages = this.computePercentagesOf(maxDeadLift);
-
-        this.setState({
-            benchPercentages,
-            squatPercentages,
-            deadLiftPercentages,
-            isComputed: true
-        });
+        this.setState(INITIAL);
     };
 
     render() {
         if(this.state.isComputed) {
             return (
-                <View style={styles.container}>
-
-                    {
-                        _.map(this.state.activePercentages, (x, i) => {
-                            return (
-                                <Text
-                                    key={i}
-                                    style={styles.text}>
-                                    {x.percentageOfMax}: {_.round(x.value)}
-                                </Text>
-                            )
-                        })
-                    }
-
-                    <Button
-                        style={styles.button}
-                        onPress={() => {this.onShow(this.state.deadLiftPercentages)}}
-                        title="Deadlift"
-                        color="#841584"
-                    />
-                    <Button
-                        style={styles.button}
-                        onPress={() => {this.onShow(this.state.squatPercentages)}}
-                        title="Squats"
-                        color="#841584"
-                    />
-                    <Button
-                        style={styles.button}
-                        onPress={() => {this.onShow(this.state.benchPercentages)}}
-                        title="Bench"
-                        color="#841584"
-                    />
-                    <Button
-                        style={styles.button}
-                        onPress={this.onReset}
-                        title="Reset"
-                        color="#841584"
-                    />
-                </View>
-            );
+                <ShowPercentagesForLiftView
+                    onUpdate={this.onUpdate}
+                    onReset={this.onReset}
+                    {...this.state}
+                />
+            )
         } else {
             return (
-                <View style={styles.container}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Max Bench Press (in lbs)"
-                        onChangeText={(maxBench) => this.setState({maxBench})}
+                <EnterMaxLiftView
+                    onUpdate={this.onUpdate}
+                    {...this.state}
                     />
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Max Squat (in lbs)"
-                        onChangeText={(maxSquat) => this.setState({maxSquat})}
-                    />
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Max Dead Lift (in lbs)"
-                        onChangeText={(maxDeadLift) => this.setState({maxDeadLift})}
-                    />
-                    <Button
-                        style={styles.button}
-                        onPress={this.onCalculate}
-                        title="Calculate Lift Percentages"
-                        color="#841584"
-                    />
-                </View>
             );
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    button: {
-        width: 85,
-        height: 45
-    },
-    textInput: {
-        width: 225,
-        height: 45
-    },
-    text: {
-        height: 25,
-        width: 190
-    }
-});
 
 AppRegistry.registerComponent('LiftCalculator', () => LiftCalculator);
