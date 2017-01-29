@@ -7,11 +7,16 @@ import {
     Button
     } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { ActionCreators } from '../actions/action_creators';
+
 import _ from 'lodash';
 
 import { PERCENTAGES } from '../constants/application.constants';
 
-export default class EnterMaxLiftView extends Component {
+class EnterMaxLiftView extends Component {
     constructor(props) {
         super(props);
     }
@@ -51,21 +56,21 @@ export default class EnterMaxLiftView extends Component {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Bench Press (in lbs)"
-                    onChangeText={(maxBench) => this.props.onUpdate({maxBench})}
+                    onChangeText={(maxBench) => this.props.updateMax({maxBench})}
                     />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Squat (in lbs)"
-                    onChangeText={(maxSquat) => this.props.onUpdate({maxSquat})}
+                    onChangeText={(maxSquat) => this.props.updateMax({maxSquat})}
                     />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Dead Lift (in lbs)"
-                    onChangeText={(maxDeadLift) => this.props.onUpdate({maxDeadLift})}
+                    onChangeText={(maxDeadLift) => this.props.updateMax({maxDeadLift})}
                     />
                 <Button
                     style={styles.button}
-                    onPress={this.onCalculate}
+                    onPress={this.props.calculatePercentages}
                     title="Calculate Lift Percentages"
                     color="#841584"
                     />
@@ -74,6 +79,18 @@ export default class EnterMaxLiftView extends Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect((state)=> {
+        return {
+            maxBench: state.maxBench,
+            maxDeadlift: state.maxDeadlift,
+            maxSquat: state.maxSquat
+        }
+    }, mapDispatchToProps)
+    (EnterMaxLiftView);
 
 const styles = StyleSheet.create({
     container: {

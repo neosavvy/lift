@@ -27,7 +27,7 @@ import {
     View
 } from 'react-native';
 
-import reducer from './shared/reducers/create_reducer';
+import reducer from './shared/reducers/lift_reducer';
 
 const INITIAL = {
     isComputed: false,
