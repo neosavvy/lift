@@ -12,43 +12,10 @@ import { bindActionCreators } from 'redux';
 
 import { ActionCreators } from '../actions/action_creators';
 
-import _ from 'lodash';
-
-import { PERCENTAGES } from '../constants/application.constants';
-
 class EnterMaxLiftView extends Component {
     constructor(props) {
         super(props);
     }
-
-    computePercentagesOf(maxValue) {
-        return _.reduce(PERCENTAGES, (acc, percentage) => {
-            const computation = {
-                percentageOfMax: percentage,
-                value: (percentage / 100) * maxValue
-            };
-            return acc.concat(computation);
-        }, [])
-    }
-
-    onCalculate = () => {
-        const {
-            maxBench,
-            maxSquat,
-            maxDeadLift
-            } = this.props;
-
-        const benchPercentages = this.computePercentagesOf(maxBench);
-        const squatPercentages = this.computePercentagesOf(maxSquat);
-        const deadLiftPercentages = this.computePercentagesOf(maxDeadLift);
-
-        this.props.onUpdate({
-            benchPercentages,
-            squatPercentages,
-            deadLiftPercentages,
-            isComputed: true
-        });
-    };
 
     render() {
         return (

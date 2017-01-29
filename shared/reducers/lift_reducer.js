@@ -1,21 +1,55 @@
-import createReducer from './create_reducer';
 import * as Types from '../actions/types';
-//
-//export const calculatePercentages = createReducer({}, {
-//
-//});
+import _ from 'lodash';
 
-export const updateMax = createReducer(
-    {
-        maxBench: 0,
-        maxSquat: 0,
-        maxDeadlift: 0
-    },
-    {
-        [Types.UPDATE_MAX](state, action){
-            console.log('in reducer');
-            console.log(arguments);
+import { PERCENTAGES } from '../constants/application.constants';
+
+const computePercentagesOf = (maxValue) => {
+    return _.reduce(PERCENTAGES, (acc, percentage) => {
+        const computation = {
+            percentageOfMax: percentage,
+            value: (percentage / 100) * maxValue
+        };
+        return acc.concat(computation);
+    }, [])
+};
+
+const onCalculate = (state) => {
+    const {
+        maxBench,
+        maxSquat,
+        maxDeadLift
+    } = state;
+
+    const benchPercentages = computePercentagesOf(maxBench);
+    const squatPercentages = computePercentagesOf(maxSquat);
+    const deadLiftPercentages = computePercentagesOf(maxDeadLift);
+
+    return {
+        benchPercentages,
+        squatPercentages,
+        deadLiftPercentages,
+        isComputed: true
+    };
+};
+
+
+export default function liftReducer(state = {
+    isComputed: false,
+    maxBench: null,
+    maxSquat: null,
+    maxDeadLift: null,
+    benchPercentages: [],
+    squatPercentages: [],
+    deadLiftPercentages: [],
+    activePercentages: []}, action) {
+    switch(action.type) {
+        case Types.CALCULATE_PERCENTAGES: 
+            return Object.assign({}, state, onCalculate(state));
+            break;
+        case Types.UPDATE_MAX:
+            return Object.assign({}, state, action.value);
+            break;
+        default:
             return state;
-        }
     }
-);
+};
