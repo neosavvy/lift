@@ -8,8 +8,14 @@ export function updateMax(max) {
 }
 
 export function calculatePercentages() {
-    console.log('crapculating');
     return {
         type: Types.CALCULATE_PERCENTAGES
+    }
+}
+
+export function updateActive(active) {
+    return {
+        type: Types.UPDATE_ACTIVE,
+        active: active
     }
 }

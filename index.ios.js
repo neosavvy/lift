@@ -3,8 +3,6 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
-import _ from 'lodash';
 import React, {Component} from 'react';
 import {
     AppRegistry
@@ -14,7 +12,6 @@ import { Provider, connect } from 'react-redux'
 import {
     createStore,
     applyMiddleware,
-    combineReducers,
     compose } from 'redux';
 
 import createLogger from 'redux-logger';

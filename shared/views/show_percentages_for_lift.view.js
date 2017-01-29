@@ -21,7 +21,7 @@ class ShowPercentagesForLiftView extends Component {
             <View style={styles.container}>
 
                 {
-                    _.map(this.props.benchPercentages, (x, i) => {
+                    _.map(this.props.activePercentages, (x, i) => {
                         return (
                             <Text
                                 key={i}
@@ -34,19 +34,31 @@ class ShowPercentagesForLiftView extends Component {
 
                 <Button
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.deadLiftPercentages
+                        })
+                    }}
                     title="Deadlift"
                     color="#841584"
                     />
                 <Button
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.squatPercentages
+                        })
+                    }}
                     title="Squats"
                     color="#841584"
                     />
                 <Button
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.benchPercentages
+                        })
+                    }}
                     title="Bench"
                     color="#841584"
                     />
@@ -67,6 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect((state)=> {
     return {
+        activePercentages: state.activePercentages,
         benchPercentages: state.benchPercentages,
         squatPercentages: state.squatPercentages,
         deadLiftPercentages: state.deadLiftPercentages

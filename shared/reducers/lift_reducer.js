@@ -43,12 +43,12 @@ export default function liftReducer(state = {
     deadLiftPercentages: [],
     activePercentages: []}, action) {
     switch(action.type) {
+        case Types.UPDATE_ACTIVE:
+            return Object.assign({}, state, action.active);
         case Types.CALCULATE_PERCENTAGES: 
             return Object.assign({}, state, onCalculate(state));
-            break;
         case Types.UPDATE_MAX:
             return Object.assign({}, state, action.value);
-            break;
         default:
             return state;
     }
