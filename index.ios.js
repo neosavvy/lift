@@ -3,21 +3,23 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
-import _ from 'lodash';
 import React, {Component} from 'react';
+import {
+    AppRegistry
+} from 'react-native';
+
+import { Provider, connect } from 'react-redux'
+import {
+    createStore,
+    applyMiddleware,
+    compose } from 'redux';
+
+import createLogger from 'redux-logger';
 
 import EnterMaxLiftView from './shared/views/enter_max_lift.view';
 import ShowPercentagesForLiftView from './shared/views/show_percentages_for_lift.view';
 
-import {
-    AppRegistry,
-    TextInput,
-    Text,
-    StyleSheet,
-    Button,
-    View
-} from 'react-native';
+import liftReducer from './shared/reducers/lift_reducer';
 
 const INITIAL = {
     isComputed: false,
@@ -30,39 +32,45 @@ const INITIAL = {
     activePercentages: []
 };
 
-export default class LiftCalculator extends Component {
+const loggerMiddleware = createLogger(
+    { predicate: (getState, action) => __DEV__ }
+);
 
-    constructor(props) {
-        super(props);
-        this.state = INITIAL
-    }
+function configureStore(initialState) {
+    const enhancer = compose(
+        applyMiddleware(
+            loggerMiddleware
+        )
+    );
+    return createStore(liftReducer, initialState, enhancer);
+}
 
-    onUpdate = (updated) => {
-        this.setState(updated);
-    };
+const store = configureStore(INITIAL);
 
-    onReset = () => {
-        this.setState(INITIAL);
-    };
-
+class LiftCalculator extends Component {
     render() {
-        if(this.state.isComputed) {
+        if(this.props.isComputed) {
             return (
-                <ShowPercentagesForLiftView
-                    onUpdate={this.onUpdate}
-                    onReset={this.onReset}
-                    {...this.state}
-                />
+                <ShowPercentagesForLiftView/>
             )
         } else {
             return (
-                <EnterMaxLiftView
-                    onUpdate={this.onUpdate}
-                    {...this.state}
-                    />
+                <EnterMaxLiftView/>
             );
         }
     }
 }
 
-AppRegistry.registerComponent('LiftCalculator', () => LiftCalculator);
+const ConnectedLiftCalculator = connect((state) => {
+        return {
+            isComputed: state.isComputed
+        }
+    })(LiftCalculator);
+
+const App = () => (
+    <Provider store={store}>
+        <ConnectedLiftCalculator/>
+    </Provider>
+);
+
+AppRegistry.registerComponent('LiftCalculator', () => App);

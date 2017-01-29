@@ -7,16 +7,14 @@ import {
     Button
     } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { ActionCreators } from '../actions/action_creators';
+
 import _ from 'lodash';
 
-import { PERCENTAGES } from '../constants/application.constants';
-
-export default class ShowPercentagesForLiftView extends Component {
-    onShow = (activePercentages) => {
-        this.props.onUpdate({
-            activePercentages
-        })
-    };
+class ShowPercentagesForLiftView extends Component {
 
     render() {
         return (
@@ -36,25 +34,37 @@ export default class ShowPercentagesForLiftView extends Component {
 
                 <Button
                     style={styles.button}
-                    onPress={() => {this.onShow(this.props.deadLiftPercentages)}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.deadLiftPercentages
+                        })
+                    }}
                     title="Deadlift"
                     color="#841584"
                     />
                 <Button
                     style={styles.button}
-                    onPress={() => {this.onShow(this.props.squatPercentages)}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.squatPercentages
+                        })
+                    }}
                     title="Squats"
                     color="#841584"
                     />
                 <Button
                     style={styles.button}
-                    onPress={() => {this.onShow(this.props.benchPercentages)}}
+                    onPress={() => {
+                        this.props.updateActive({
+                            activePercentages: this.props.benchPercentages
+                        })
+                    }}
                     title="Bench"
                     color="#841584"
                     />
                 <Button
                     style={styles.button}
-                    onPress={this.props.onReset}
+                    onPress={() => {}}
                     title="Reset"
                     color="#841584"
                     />
@@ -62,6 +72,20 @@ export default class ShowPercentagesForLiftView extends Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect((state)=> {
+    return {
+        activePercentages: state.activePercentages,
+        benchPercentages: state.benchPercentages,
+        squatPercentages: state.squatPercentages,
+        deadLiftPercentages: state.deadLiftPercentages
+    }
+}, mapDispatchToProps)
+(ShowPercentagesForLiftView);
 
 const styles = StyleSheet.create({
     container: {

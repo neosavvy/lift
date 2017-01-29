@@ -7,43 +7,15 @@ import {
     Button
     } from 'react-native';
 
-import _ from 'lodash';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { PERCENTAGES } from '../constants/application.constants';
+import { ActionCreators } from '../actions/action_creators';
 
-export default class EnterMaxLiftView extends Component {
+class EnterMaxLiftView extends Component {
     constructor(props) {
         super(props);
     }
-
-    computePercentagesOf(maxValue) {
-        return _.reduce(PERCENTAGES, (acc, percentage) => {
-            const computation = {
-                percentageOfMax: percentage,
-                value: (percentage / 100) * maxValue
-            };
-            return acc.concat(computation);
-        }, [])
-    }
-
-    onCalculate = () => {
-        const {
-            maxBench,
-            maxSquat,
-            maxDeadLift
-            } = this.props;
-
-        const benchPercentages = this.computePercentagesOf(maxBench);
-        const squatPercentages = this.computePercentagesOf(maxSquat);
-        const deadLiftPercentages = this.computePercentagesOf(maxDeadLift);
-
-        this.props.onUpdate({
-            benchPercentages,
-            squatPercentages,
-            deadLiftPercentages,
-            isComputed: true
-        });
-    };
 
     render() {
         return (
@@ -51,21 +23,21 @@ export default class EnterMaxLiftView extends Component {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Bench Press (in lbs)"
-                    onChangeText={(maxBench) => this.props.onUpdate({maxBench})}
+                    onChangeText={(maxBench) => this.props.updateMax({maxBench})}
                     />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Squat (in lbs)"
-                    onChangeText={(maxSquat) => this.props.onUpdate({maxSquat})}
+                    onChangeText={(maxSquat) => this.props.updateMax({maxSquat})}
                     />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Max Dead Lift (in lbs)"
-                    onChangeText={(maxDeadLift) => this.props.onUpdate({maxDeadLift})}
+                    onChangeText={(maxDeadLift) => this.props.updateMax({maxDeadLift})}
                     />
                 <Button
                     style={styles.button}
-                    onPress={this.onCalculate}
+                    onPress={this.props.calculatePercentages}
                     title="Calculate Lift Percentages"
                     color="#841584"
                     />
@@ -74,6 +46,18 @@ export default class EnterMaxLiftView extends Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect((state)=> {
+        return {
+            maxBench: state.maxBench,
+            maxDeadlift: state.maxDeadlift,
+            maxSquat: state.maxSquat
+        }
+    }, mapDispatchToProps)
+    (EnterMaxLiftView);
 
 const styles = StyleSheet.create({
     container: {
