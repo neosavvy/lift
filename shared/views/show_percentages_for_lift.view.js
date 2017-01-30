@@ -4,7 +4,8 @@ import {
     TextInput,
     StyleSheet,
     View,
-    Button
+    Button,
+    TouchableHighlight
     } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -20,6 +21,11 @@ class ShowPercentagesForLiftView extends Component {
         title: 'Here is your breakdown',
     };
 
+    onWeightSelected = (weight) => {
+        console.log('weight selected: ', weight);
+        this.props.selectWeight(weight);
+    };
+
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -28,11 +34,18 @@ class ShowPercentagesForLiftView extends Component {
                 {
                     _.map(this.props.activePercentages, (x, i) => {
                         return (
-                            <Text
+                            <TouchableHighlight
                                 key={i}
-                                style={styles.text}>
-                                {x.percentageOfMax}: {_.round(x.value)}
-                            </Text>
+                                onPress={() => {
+                                    this.onWeightSelected(x)
+                                    navigate('ShowPlatesForWeight')
+                                }}
+                            >
+                                <Text
+                                    style={styles.text}>
+                                    {x.percentageOfMax}: {_.round(x.value)}
+                                </Text>
+                            </TouchableHighlight>
                         )
                     })
                 }

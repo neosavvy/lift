@@ -18,6 +18,8 @@ import createLogger from 'redux-logger';
 
 import EnterMaxLiftView from './shared/views/enter_max_lift.view';
 import ShowPercentagesForLiftView from './shared/views/show_percentages_for_lift.view';
+import ShowPlatesForWeight from './shared/views/show_plates_for_weight.view';
+
 
 import { StackNavigator } from 'react-navigation';
 
@@ -50,7 +52,8 @@ const store = configureStore(INITIAL);
 
 const LiftCalculator = StackNavigator({
     EnterMaxLift: { screen: EnterMaxLiftView },
-    ShowPercentagesForLiftView: { screen: ShowPercentagesForLiftView }
+    ShowPercentagesForLiftView: { screen: ShowPercentagesForLiftView },
+    ShowPlatesForWeight: { screen: ShowPlatesForWeight }
 });
 
 
