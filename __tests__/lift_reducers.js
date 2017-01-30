@@ -49,11 +49,41 @@ describe('showPlatesForWeight', () => {
         });
     });
 
-    it('Should properly calculate 400 lbs of weight', function () {
+    it('Should properly calculate 395 lbs of weight', function () {
         expect(showPlatesForWeight(395)).toEqual({
             45: 6,
             35: 2,
             5: 2
+        });
+    });
+
+    it('Should properly calculate 50 lbs of weight', function () {
+        expect(showPlatesForWeight(50)).toEqual({
+            1: 4,
+            half: 2
+        });
+    });
+
+    it('Should properly calculate 49.5 lbs of weight', function () {
+        expect(showPlatesForWeight(49.5)).toEqual({
+            1: 4
+        });
+    });
+
+    it('Should properly calculate 400 lbs of weight', function () {
+        expect(showPlatesForWeight(400)).toEqual({
+            45: 6,
+            35: 2,
+            5: 2,
+            1: 4,
+            half: 2
+        });
+    });
+
+    it('Should properly calculate 316 lbs of weight', function () {
+        expect(showPlatesForWeight(316.627)).toEqual({
+            45: 6,
+            half: 2
         });
     });
 });

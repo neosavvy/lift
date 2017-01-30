@@ -25,3 +25,10 @@ export function reset() {
         type: Types.RESET
     }
 }
+
+export function selectWeight(weight) {
+    return {
+        type: Types.SELECT_WEIGHT,
+        weight
+    }
+}

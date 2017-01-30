@@ -43,8 +43,9 @@ function computeCalculationDivisibleByTwo(calculation) {
 }
 
 export function showPlatesForWeight(weight) {
+
     const MF = Math.floor;
-    let weightMinusBar = weight - 45;
+    let weightMinusBar = MF(weight) - 45;
     const num45 = computeCalculationDivisibleByTwo(MF(weightMinusBar / 45));
     weightMinusBar = weightMinusBar - 45 * num45;
     const num35 = computeCalculationDivisibleByTwo(MF(weightMinusBar / 35));
@@ -56,13 +57,19 @@ export function showPlatesForWeight(weight) {
     const num5  = computeCalculationDivisibleByTwo(MF(weightMinusBar / 5));
     weightMinusBar = weightMinusBar - 5 * num5;
     const num1  = computeCalculationDivisibleByTwo(MF(weightMinusBar / 1));
+    weightMinusBar = weightMinusBar - 1 * num1;
+    const numHalf = computeCalculationDivisibleByTwo(weightMinusBar / .5);
+    weightMinusBar = weightMinusBar - .5 * numHalf;
+    const numQuarter = computeCalculationDivisibleByTwo(weightMinusBar / .25);
     return _.pickBy({
         45: num45,
         35: num35,
         25: num25,
         10: num10,
         5: num5,
-        1: num1
+        1: num1,
+        half: numHalf,
+        quarter: numQuarter
     }, _.identity)
 }
 
@@ -91,6 +98,14 @@ export default function liftReducer(state = {
                 deadLiftPercentages: [],
                 activePercentages: []
             });
+        case Types.SELECT_WEIGHT:
+            return Object.assign(
+                {},
+                state,
+                {
+                    plates: showPlatesForWeight(action.weight.value)
+                }
+            );
         default:
             return state;
     }
