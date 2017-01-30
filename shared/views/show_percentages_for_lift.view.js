@@ -16,6 +16,10 @@ import _ from 'lodash';
 
 class ShowPercentagesForLiftView extends Component {
 
+    static navigationOptions = {
+        title: 'Here is your breakdown',
+    };
+
     render() {
         return (
             <View style={styles.container}>

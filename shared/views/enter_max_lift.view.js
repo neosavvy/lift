@@ -13,11 +13,17 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions/action_creators';
 
 class EnterMaxLiftView extends Component {
+
+    static navigationOptions = {
+        title: 'Enter Your Max Lifts',
+    };
+
     constructor(props) {
         super(props);
     }
 
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <TextInput
@@ -37,7 +43,11 @@ class EnterMaxLiftView extends Component {
                     />
                 <Button
                     style={styles.button}
-                    onPress={this.props.calculatePercentages}
+                    onPress={() => {
+                        this.props.calculatePercentages();
+                        navigate('ShowPercentagesForLiftView');
+
+                    }}
                     title="Calculate Lift Percentages"
                     color="#841584"
                     />
@@ -72,6 +82,7 @@ const styles = StyleSheet.create({
         height: 45
     },
     textInput: {
+        textAlign: 'center',
         width: 225,
         height: 45
     },

@@ -19,6 +19,8 @@ import createLogger from 'redux-logger';
 import EnterMaxLiftView from './shared/views/enter_max_lift.view';
 import ShowPercentagesForLiftView from './shared/views/show_percentages_for_lift.view';
 
+import { StackNavigator } from 'react-navigation';
+
 import liftReducer from './shared/reducers/lift_reducer';
 
 const INITIAL = {
@@ -47,19 +49,10 @@ function configureStore(initialState) {
 
 const store = configureStore(INITIAL);
 
-class LiftCalculator extends Component {
-    render() {
-        if(this.props.isComputed) {
-            return (
-                <ShowPercentagesForLiftView/>
-            )
-        } else {
-            return (
-                <EnterMaxLiftView/>
-            );
-        }
-    }
-}
+const LiftCalculator = StackNavigator({
+    EnterMaxLift: { screen: EnterMaxLiftView },
+    ShowPercentagesForLiftView: { screen: ShowPercentagesForLiftView }
+});
 
 const ConnectedLiftCalculator = connect((state) => {
         return {
