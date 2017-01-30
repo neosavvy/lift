@@ -46,7 +46,6 @@ class EnterMaxLiftView extends Component {
                     onPress={() => {
                         this.props.calculatePercentages();
                         navigate('ShowPercentagesForLiftView');
-
                     }}
                     title="Calculate Lift Percentages"
                     color="#841584"

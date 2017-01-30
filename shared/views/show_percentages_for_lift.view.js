@@ -21,6 +21,7 @@ class ShowPercentagesForLiftView extends Component {
     };
 
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
 
@@ -68,7 +69,10 @@ class ShowPercentagesForLiftView extends Component {
                     />
                 <Button
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => {
+                        this.props.reset();
+                        navigate('EnterMaxLift');
+                    }}
                     title="Reset"
                     color="#841584"
                     />

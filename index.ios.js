@@ -24,7 +24,6 @@ import { StackNavigator } from 'react-navigation';
 import liftReducer from './shared/reducers/lift_reducer';
 
 const INITIAL = {
-    isComputed: false,
     maxBench: null,
     maxSquat: null,
     maxDeadLift: null,
@@ -54,15 +53,10 @@ const LiftCalculator = StackNavigator({
     ShowPercentagesForLiftView: { screen: ShowPercentagesForLiftView }
 });
 
-const ConnectedLiftCalculator = connect((state) => {
-        return {
-            isComputed: state.isComputed
-        }
-    })(LiftCalculator);
 
 const App = () => (
     <Provider store={store}>
-        <ConnectedLiftCalculator/>
+        <LiftCalculator/>
     </Provider>
 );
 

@@ -19,3 +19,9 @@ export function updateActive(active) {
         active: active
     }
 }
+
+export function reset() {
+    return {
+        type: Types.RESET
+    }
+}
