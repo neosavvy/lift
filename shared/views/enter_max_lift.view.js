@@ -26,19 +26,19 @@ class EnterMaxLiftView extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+                <Text>Max Bench Press (in lbs):</Text>
                 <TextInput
                     style={styles.textInput}
-                    placeholder="Max Bench Press (in lbs)"
                     onChangeText={(maxBench) => this.props.updateMax({maxBench})}
                     />
+                <Text>Max Squat (in lbs)</Text>
                 <TextInput
                     style={styles.textInput}
-                    placeholder="Max Squat (in lbs)"
                     onChangeText={(maxSquat) => this.props.updateMax({maxSquat})}
                     />
+                <Text>Max Dead Lift (in lbs)</Text>
                 <TextInput
                     style={styles.textInput}
-                    placeholder="Max Dead Lift (in lbs)"
                     onChangeText={(maxDeadLift) => this.props.updateMax({maxDeadLift})}
                     />
                 <Button
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         textAlign: 'center',
-        width: 225,
+        backgroundColor: 'blue',
         height: 45
     },
     text: {
