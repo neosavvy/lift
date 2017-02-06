@@ -120,12 +120,7 @@ const styles = StyleSheet.create({
         width: 85,
         height: 45
     },
-    textInput: {
-        width: 225,
-        height: 45
-    },
     text: {
-        height: 25,
-        width: 190
+        height: 25
     }
 });
