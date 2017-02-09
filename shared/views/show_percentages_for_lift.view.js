@@ -22,7 +22,6 @@ class ShowPercentagesForLiftView extends Component {
     };
 
     onWeightSelected = (weight) => {
-        console.log('weight selected: ', weight);
         this.props.selectWeight(weight);
     };
 
@@ -54,12 +53,12 @@ class ShowPercentagesForLiftView extends Component {
                     style={styles.button}
                     onPress={() => {
                         this.props.updateActive({
-                            activePercentages: this.props.deadLiftPercentages
+                            activePercentages: this.props.benchPercentages
                         })
                     }}
-                    title="Deadlift"
+                    title="Bench"
                     color="#841584"
-                    />
+                />
                 <Button
                     style={styles.button}
                     onPress={() => {
@@ -74,12 +73,12 @@ class ShowPercentagesForLiftView extends Component {
                     style={styles.button}
                     onPress={() => {
                         this.props.updateActive({
-                            activePercentages: this.props.benchPercentages
+                            activePercentages: this.props.deadLiftPercentages
                         })
                     }}
-                    title="Bench"
+                    title="Deadlift"
                     color="#841584"
-                    />
+                />
                 <Button
                     style={styles.button}
                     onPress={() => {
