@@ -11,24 +11,29 @@ import {
 import _ from 'lodash';
 
 export class ShowPlatesForWeight extends Component {
+
+    static navigationOptions = {
+        title: 'Grab your plates'
+    };
+
     render() {
         return <View style={styles.container}>
-            <Text>This is ShowPlatesView</Text>
+            <Text style="text">Selected Weight {_.round(this.props.weight)}</Text>
             {
-                _.map(_.sortBy(_.keys(this.props.plates)), (plateKey, index) => {
+                _.map(this.props.plates, (descriptor, index) => {
                     return (<Text key={index}>
-                        {plateKey}: {this.props.plates[plateKey]}
+                        {descriptor.plate}: {descriptor.value}
                     </Text>)
                 })
             }
-
         </View>
     }
 }
 
 export default connect((state) => {
     return {
-        plates: state.plates
+        plates: state.plates,
+        weight: state.weight
     }
 })(ShowPlatesForWeight);
 
@@ -44,13 +49,9 @@ const styles = StyleSheet.create({
         width: 85,
         height: 45
     },
-    textInput: {
-        textAlign: 'center',
-        backgroundColor: 'blue',
-        height: 45
-    },
     text: {
+        
         height: 25,
-        width: 190
+        width: 190 
     }
 });

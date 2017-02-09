@@ -1,7 +1,30 @@
 import 'react-native';
 import React from 'react';
 
-import { showPlatesForWeight } from '../shared/reducers/lift_reducer';
+import {
+    showPlatesForWeight,
+    sortPlates
+} from '../shared/reducers/lift_reducer';
+
+describe('sortPlates', () => {
+    it('Should take a list of numeric keyed plates and return them sorted', function () {
+        const sorted = sortPlates({
+            5: 4,
+            35: 2,
+            45: 2,
+            2.5: 4,
+            1: 2
+        });
+
+        expect(sorted).toEqual([
+            { plate: '45', value: 2},
+            { plate: '35', value: 2},
+            { plate: '5', value: 4},
+            { plate: '2.5', value: 4},
+            { plate: '1', value: 2}
+        ])
+    });
+});
 
 describe('showPlatesForWeight', () => {
 
@@ -60,7 +83,7 @@ describe('showPlatesForWeight', () => {
     it('Should properly calculate 50 lbs of weight', function () {
         expect(showPlatesForWeight(50)).toEqual({
             1: 4,
-            half: 2
+            .5: 2
         });
     });
 
@@ -76,14 +99,14 @@ describe('showPlatesForWeight', () => {
             35: 2,
             5: 2,
             1: 4,
-            half: 2
+            .5: 2
         });
     });
 
     it('Should properly calculate 316 lbs of weight', function () {
         expect(showPlatesForWeight(316.627)).toEqual({
             45: 6,
-            half: 2
+            .5: 2
         });
     });
 });

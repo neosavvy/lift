@@ -68,9 +68,22 @@ export function showPlatesForWeight(weight) {
         10: num10,
         5: num5,
         1: num1,
-        half: numHalf,
-        quarter: numQuarter
+        .5: numHalf,
+        .25: numQuarter
     }, _.identity)
+}
+
+export function sortPlates(plates) {
+    const keys = _(plates)
+        .keys()
+        .map(k => (parseFloat(k)))
+        .sortBy(keys)
+        .reverse()
+        .value();
+
+    return _.map(keys, (k) => {
+        return { plate: `${k}`, value: plates[k]}
+    });
 }
 
 export default function liftReducer(state = {
@@ -103,7 +116,8 @@ export default function liftReducer(state = {
                 {},
                 state,
                 {
-                    plates: showPlatesForWeight(action.weight.value)
+                    weight: action.weight.value,
+                    plates: sortPlates(showPlatesForWeight(action.weight.value))
                 }
             );
         default:

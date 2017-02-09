@@ -4,7 +4,11 @@ import {
     TextInput,
     StyleSheet,
     View,
-    Button
+    KeyboardAvoidingView,
+    Keyboard,
+    TouchableWithoutFeedback,
+    Button,
+    Image
     } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -22,35 +26,56 @@ class EnterMaxLiftView extends Component {
         super(props);
     }
 
+    focusNextField = (nextField) => {
+        this.refs[nextField].focus();
+    };
+
+    viewClicked = () => {
+        Keyboard.dismiss();
+    };
+
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={styles.container}>
-                <Text>Max Bench Press (in lbs):</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(maxBench) => this.props.updateMax({maxBench})}
+            <TouchableWithoutFeedback
+                onPress={this.viewClicked}
+            >
+                <View
+                    style={styles.container}
+                >
+                    <Image
+                        style={{width: 250, height: 250}}
+                        source={require('../assets/icons/dumbbell.png')}
                     />
-                <Text>Max Squat (in lbs)</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(maxSquat) => this.props.updateMax({maxSquat})}
+                    <Text>Max Bench Press (in lbs):</Text>
+                    <TextInput
+                        keyboardType = 'numeric'
+                        style={styles.textInput}
+                        onChangeText={(maxBench) => this.props.updateMax({maxBench})}
                     />
-                <Text>Max Dead Lift (in lbs)</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(maxDeadLift) => this.props.updateMax({maxDeadLift})}
+                    <Text>Max Squat (in lbs)</Text>
+                    <TextInput
+                        keyboardType = 'numeric'
+                        style={styles.textInput}
+                        onChangeText={(maxSquat) => this.props.updateMax({maxSquat})}
                     />
-                <Button
-                    style={styles.button}
-                    onPress={() => {
-                        this.props.calculatePercentages();
-                        navigate('ShowPercentagesForLiftView');
-                    }}
-                    title="Calculate Lift Percentages"
-                    color="#841584"
+                    <Text>Max Dead Lift (in lbs)</Text>
+                    <TextInput
+                        keyboardType = 'numeric'
+                        style={styles.textInput}
+                        onChangeText={(maxDeadLift) => this.props.updateMax({maxDeadLift})}
                     />
-            </View>
+                    <Button
+                        style={styles.button}
+                        onPress={() => {
+                            this.props.calculatePercentages();
+                            navigate('ShowPercentagesForLiftView');
+                        }}
+                        title="Calculate Lift Percentages"
+                        color="#841584"
+                    />
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -78,11 +103,13 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 85,
-        height: 45
+        height: 45,
     },
     textInput: {
         textAlign: 'center',
-        backgroundColor: 'blue',
+        // backgroundColor: 'blue',
+        borderColor: 'gray',
+        borderWidth: 1,
         height: 45
     },
     text: {
