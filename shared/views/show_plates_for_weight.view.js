@@ -59,7 +59,7 @@ export class ShowPlatesForWeight extends Component {
             default:
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate45.png')}/>
+                    source={require('../assets/icons/dumbbell.png')}/>
         }
     }
 
