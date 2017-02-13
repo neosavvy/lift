@@ -116,6 +116,7 @@ export default function liftReducer(state = {
                 {},
                 state,
                 {
+                    weightPercent: action.weight.percentageOfMax,
                     weight: action.weight.value,
                     plates: sortPlates(showPlatesForWeight(action.weight.value))
                 }

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import {
+    Image,
     StyleSheet,
     View,
     Text
@@ -16,14 +17,74 @@ export class ShowPlatesForWeight extends Component {
         title: 'Grab your plates'
     };
 
+    determineImageForPlate(plate) {
+        console.log('determineImageForPlate: ', plate);
+        switch(plate){
+            case "45":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate45.png')}/>
+            case "35":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate35.png')}/>
+            case "25":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate25.png')}/>
+            case "10":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate10.png')}/>
+            case "5":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate5.png')}/>
+            case "2.5":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate2.5.png')}/>
+            case "1":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate1.png')}/>
+            case "0.5":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate.5.png')}/>
+            case "0.25":
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate.25.png')}/>
+            default:
+                return <Image
+                    style={styles.plateIcon}
+                    source={require('../assets/icons/plate45.png')}/>
+        }
+    }
+
     render() {
         return <View style={styles.container}>
-            <Text style="text">Selected Weight {_.round(this.props.weight)}</Text>
+            <Text
+                style={styles.text}>
+                {_.round(this.props.weight)} lbs.
+            </Text>
+            <Text
+                style={styles.text}>
+                {_.round(this.props.weightPercent)} %
+            </Text>
             {
                 _.map(this.props.plates, (descriptor, index) => {
-                    return (<Text key={index}>
-                        {descriptor.plate}: {descriptor.value}
-                    </Text>)
+                    return (
+                        <View style={styles.row} key={index}>
+                            <View style={styles.rowContainer}>
+                                {this.determineImageForPlate(descriptor.plate)}
+                                <Text style={styles.largeText}>
+                                    x {descriptor.value}
+                                </Text>
+                            </View>
+                        </View>
+                    )
                 })
             }
         </View>
@@ -33,25 +94,38 @@ export class ShowPlatesForWeight extends Component {
 export default connect((state) => {
     return {
         plates: state.plates,
-        weight: state.weight
+        weight: state.weight,
+        weightPercent: state.weightPercent
     }
 })(ShowPlatesForWeight);
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
-    button: {
-        width: 85,
-        height: 45
+    row: {
+        width: 150,
+        height: 100
+    },
+    rowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50
     },
     text: {
-        
-        height: 25,
-        width: 190 
+        height: 50,
+        fontSize: 38
+    },
+    largeText: {
+        fontSize: 24
+    },
+    plateIcon: {
+        width: 100,
+        height: 100
     }
 });
