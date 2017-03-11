@@ -839,6 +839,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.neosavvy.LiftCalculator;
 				PRODUCT_NAME = LiftCalculator;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -857,6 +858,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.neosavvy.LiftCalculator;
 				PRODUCT_NAME = LiftCalculator;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

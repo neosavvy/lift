@@ -18,45 +18,58 @@ export class ShowPlatesForWeight extends Component {
     };
 
     determineImageForPlate(plate) {
-        console.log('determineImageForPlate: ', plate);
-        switch(plate){
+        console.log('CACHED: ', plate);
+        const plateAsString = `${plate}`;
+        switch(plateAsString){
             case "45":
+                console.log('45');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate45.png')}/>
+                    source={require('../assets/icons/plate45.png')}/>;
             case "35":
+                console.log('35');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate35.png')}/>
+                    source={require('../assets/icons/plate35.png')}/>;
             case "25":
+                console.log('25');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate25.png')}/>
+                    source={require('../assets/icons/plate25.png')}/>;
             case "10":
+                console.log('10');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate10.png')}/>
+                    source={require('../assets/icons/plate10.png')}/>;
             case "5":
+                console.log('5');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate5.png')}/>
+                    source={require('../assets/icons/plate5.png')}/>;
             case "2.5":
+                console.log('2.5');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate2.5.png')}/>
+                    source={require('../assets/icons/plate2.5.png')}/>;
             case "1":
+                console.log('1');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate1.png')}/>
+                    source={require('../assets/icons/plate1.png')}/>;
+            case ".5":
             case "0.5":
+                console.log('found>>>0.5');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate.5.png')}/>
+                    source={require('../assets/icons/plateHalf.png')}/>;
+            case ".25":
             case "0.25":
+                console.log('0.25');
                 return <Image
                     style={styles.plateIcon}
-                    source={require('../assets/icons/plate.25.png')}/>
+                    source={require('../assets/icons/plateQuarter.png')}/>
             default:
+                console.log('returning the default');
                 return <Image
                     style={styles.plateIcon}
                     source={require('../assets/icons/dumbbell.png')}/>
